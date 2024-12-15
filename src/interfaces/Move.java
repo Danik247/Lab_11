@@ -1,6 +1,6 @@
 package interfaces;
 import rec.Place;
 
-public interface move {
+public interface Move {
     void changeLoc(Place to);
 }

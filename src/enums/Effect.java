@@ -1,9 +1,9 @@
 package enums;
 
 public enum Effect {
-    isDropped,
-    isAbove,
-    isHided,
-    isCoughted,
-    isConfused
+    IS_DROPPED,
+    IS_ABOVE,
+    IS_HIDED,
+    IS_COUGHTED,
+    IS_CONFUSED
 }

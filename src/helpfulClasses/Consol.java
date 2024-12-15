@@ -1,6 +1,6 @@
-package interfaces;
+package helpfulClasses;
 
-public class consl {
+public class Consol {
     public static void describe(String message){
         System.out.println(message+"\n...");
     }

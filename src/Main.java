@@ -1,14 +1,14 @@
 import persons.*;
 import rec.Place;
-import rec.crowd;
+import helpfulClasses.Crowd;
 
 public class Main {
     public static void main(String[] args) {
-        goat got = new goat(3);
-        man man = new man("Незнайка",3);
-        Place bridge = new Place("мост",2,false,false,true);
-        Place certain = new Place("занавес",3,false,true,false);
-        crowd crow = new crowd(got ,12);
+        Goat got = new Goat(3);
+        Man man = new Man("Незнайка", 3);
+        Place bridge = new Place("мост", 2, false, false, true);
+        Place certain = new Place("занавес", 3, false, true, false);
+        Crowd crow = new Crowd(got, 12);
         man.changeLoc(bridge);
         man.escape(bridge);
         man.rushCrowd(crow);

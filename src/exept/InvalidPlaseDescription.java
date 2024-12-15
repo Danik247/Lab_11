@@ -1,9 +1,9 @@
 package exept;
 
-public class myEror extends IllegalArgumentException {
+public class InvalidPlaseDescription extends IllegalArgumentException {
     private final String customMessage;
 
-    public myEror(String message) {
+    public InvalidPlaseDescription(String message) {
         super(message);
         this.customMessage = message;
     }
