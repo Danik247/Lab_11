@@ -1,9 +1,9 @@
 package exept;
 
-public class InvalidPlaseDescription extends IllegalArgumentException {
+public class InvalidPlaceException extends IllegalArgumentException {
     private final String customMessage;
 
-    public InvalidPlaseDescription(String message) {
+    public InvalidPlaceException(String message) {
         super(message);
         this.customMessage = message;
     }

@@ -9,12 +9,12 @@ public class Main {
         Place bridge = new Place("мост", 2, false, false, true);
         Place certain = new Place("занавес", 3, false, true, false);
         Crowd crow = new Crowd(got, 12);
-        man.changeLoc(bridge);
-        man.escape(bridge);
+        man.changeLocation(bridge);
+        man.escapeLocation(bridge);
         man.rushCrowd(crow);
-        man.changeLoc(certain);
+        man.changeLocation(certain);
         crow.play(man);
-        man.escape(certain);
+        man.escapeLocation(certain);
     }
 }
 
