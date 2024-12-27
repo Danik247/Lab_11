@@ -10,6 +10,6 @@ public class InvalidPlaceException extends IllegalArgumentException {
 
     @Override
     public String getMessage() {
-        return "Ошибкочка: " + customMessage;
+        return "Ошибочка: " + customMessage;
     }
 }

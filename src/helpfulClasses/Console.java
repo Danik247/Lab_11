@@ -2,7 +2,7 @@ package helpfulClasses;
 
 import persons.Person;
 
-public class Consol {
+public class Console {
     public static void describe(String message){
         System.out.println(message+"\n...");
     }

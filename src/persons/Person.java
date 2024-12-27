@@ -1,7 +1,7 @@
 package persons;
 
 import enums.Effect;
-import helpfulClasses.Consol;
+import helpfulClasses.Console;
 import interfaces.Moveable;
 import rec.Place;
 import helpfulClasses.Crowd;
@@ -21,7 +21,7 @@ public abstract class Person implements Moveable {
         this.allStats = new Statistics(speed, dexterity, eloquence, weight, size);
         this.name = name;
         this.stamina = stamina;
-        Consol.hello(name, this);
+        Console.hello(name, this);
         lastplaces.add(start);
     }
 
@@ -62,14 +62,14 @@ public abstract class Person implements Moveable {
         boolean success = checkit(60 - (crowd.count - (stamina + allStats.dexterity()) * 3));
         if (stamina >= (float) crowd.count / 3) {
             if (success) {
-                Consol.describe("ты прополз через толпу из " + crowd.count + " " + crowd.content.name + "-ов");
+                Console.describe("ты прополз через толпу из " + crowd.count + " " + crowd.content.name + "-ов");
                 changeSt((float) crowd.count / 3);
             } else {
-                Consol.describe("тебя вытолкнули обратно, попробуй снова");
+                Console.describe("тебя вытолкнули обратно, попробуй снова");
                 rushCrowd(crowd);
             }
         } else {
-            Consol.describe("ты все-таки решил оценить свои силы и");
+            Console.describe("ты все-таки решил оценить свои силы и");
             rest((float) crowd.count / 3);
             rushCrowd(crowd);
         }
@@ -77,8 +77,8 @@ public abstract class Person implements Moveable {
 
     @Override
     public void changeLocation(Place place) {
-        boolean success = checkit(60 - (place.hard() * 12 - (stamina + allStats.dexterity()) * 4));
-        if (place.hard() < stamina) {
+        boolean success = checkit(60 - (place.difficulty() * 12 - (stamina + allStats.dexterity()) * 4));
+        if (place.difficulty() < stamina) {
             if (place.isUp()) {
                 getUp(place, success);
             } else if (place.isDown()) {
@@ -90,16 +90,16 @@ public abstract class Person implements Moveable {
             }
             lastplaces.add(place);
         } else {
-            Consol.describe("Что-то ты устал, попробуй отдохнуть");
-            rest(place.hard() * 3);
+            Console.describe("Что-то ты устал, попробуй отдохнуть");
+            rest(place.difficulty() * 3);
             changeLocation(place);
         }
     }
 
     @Override
     public void escapeLocation(Place place) {
-        boolean success = checkit(60 - (place.hard() * 12 - (stamina + allStats.dexterity()) * 3));
-        if (stamina >= place.hard()) {
+        boolean success = checkit(60 - (place.difficulty() * 12 - (stamina + allStats.dexterity()) * 3));
+        if (stamina >= place.difficulty()) {
             if (place.isDown()) {
                 escapeFromHole(place, success);
             } else if (place.isUp()) {
@@ -114,72 +114,72 @@ public abstract class Person implements Moveable {
 
     public boolean dodge(Person attacker) {
         boolean success = checkit(50 + (stamina + allStats.dexterity()) * 2);
-        Consol.describe(success ? "увернулся" : attacker.name + " попал в тебя");
+        Console.describe(success ? "увернулся" : attacker.name + " попал в тебя");
         return success;
     }
 
     public void rest(float timeHour) {
         changeSt(timeHour * 2);
-        Consol.describe("Ты отдыхал " + timeHour + " часов, и восстановил " + timeHour * 2 + " выносливости");
+        Console.describe("Ты отдыхал " + timeHour + " часов, и восстановил " + timeHour * 2 + " выносливости");
     }
 
     private void notEnothStaminaToExit(Place place) {
-        Consol.describe("Что-то ты устал, попробуй отдохнуть");
-        rest(place.hard() * 3);
+        Console.describe("Что-то ты устал, попробуй отдохнуть");
+        rest(place.difficulty() * 3);
         escapeLocation(place);
     }
 
     private void standartExit(Place place) {
-        Consol.describe("ты выбрался оттуда...");
-        changeSt((float) place.hard() * -1);
+        Console.describe("ты выбрался оттуда...");
+        changeSt((float) place.difficulty() * -1);
         effect = null;
     }
 
     private void returnDown(Place place, boolean success) {
         if (success) {
-            Consol.describe("Ты все-таки спустился, но потратил " + place.hard() / 2 + " выноосливости");
-            changeSt((float) place.hard() / -2);
+            Console.describe("Ты все-таки спустился, но потратил " + place.difficulty() / 2 + " выноосливости");
+            changeSt((float) place.difficulty() / -2);
             effect = null;
         } else {
-            Consol.describe("Хаха... Ты грохнулся вниз и потратил " + place.hard() + " выносливости");
-            changeSt((float) place.hard() * -1);
+            Console.describe("Хаха... Ты грохнулся вниз и потратил " + place.difficulty() + " выносливости");
+            changeSt((float) place.difficulty() * -1);
         }
     }
 
     private void escapeFromHole(Place place, boolean success) {
         if (success) {
-            Consol.describe("Ты все-таки вылез из " + place.name() + ", но потратил " + place.hard() + " выносливости");
-            changeSt(place.hard() * -1);
+            Console.describe("Ты все-таки вылез из " + place.name() + ", но потратил " + place.difficulty() + " выносливости");
+            changeSt(place.difficulty() * -1);
             effect = null;
         } else {
-            Consol.describe("Эээ... Ты уныло соскользнул в самый низ и потратил " + place.hard() / 2 + " выносливости");
-            changeSt((float) place.hard() / -2);
+            Console.describe("Эээ... Ты уныло соскользнул в самый низ и потратил " + place.difficulty() / 2 + " выносливости");
+            changeSt((float) place.difficulty() / -2);
             escapeLocation(place);
         }
     }
 
     private void getNormal(Place place) {
-        Consol.describe(name + " пришел к такому месту как " + place.name() + " почти не потратив выносливости");
-        changeSt((float) place.hard() / -10);
+        Console.describe(name + " пришел к такому месту как " + place.name() + " почти не потратив выносливости");
+        changeSt((float) place.difficulty() / -10);
     }
 
     private void getHide(Place place, boolean success) {
         if (success) {
-            Consol.describe("Ты решил спрятаться \nПоздравляю тебя не видно, теперь ты " + place.name());
+            Console.describe("Ты решил спрятаться \nПоздравляю тебя не видно, теперь ты " + place.name());
             effect = Effect.IS_HIDED;
         } else {
-            Consol.describe("Ты запутался, молодец");
+            Console.describe("Ты запутался, молодец");
             effect = Effect.IS_COUGHTED;
         }
     }
 
     private void getDown(Place place, boolean success) {
         if (success) {
-            Consol.describe("ты аккуратно спустился в " + place.name() + ", хоть и потратил " + place.hard() + " выносливости");
-            changeSt((float) place.hard() / -1);
+            Console.describe("ты аккуратно спустился в " + place.name() + ", хоть и потратил " + place.difficulty() + " выносливости");
+            changeSt((float) place.difficulty() / -1);
         } else {
-            Consol.describe("Ты полетел в самый низ, зато потратил всего " + place.hard() + " выносливости");
-            changeSt((float) place.hard() / -2);
+            Console.describe("Ты полетел в самый низ, зато потратил всего " + place.difficulty() + " выносливости");
+            changeSt((float) place.difficulty() / -2);
         }
         lastplaces.add(place);
         effect = Effect.IS_DROPPED;
@@ -187,13 +187,13 @@ public abstract class Person implements Moveable {
 
     private void getUp(Place place, boolean success) {
         if (success) {
-            Consol.describe("Ты залез на " + place.name() + ", но потратил " + place.hard() + " выноосливости");
-            changeSt((float) place.hard() / -2);
+            Console.describe("Ты залез на " + place.name() + ", но потратил " + place.difficulty() + " выноосливости");
+            changeSt((float) place.difficulty() / -2);
             lastplaces.add(place);
             effect = Effect.IS_ABOVE;
         } else {
-            Consol.describe("Эээ... Ты уныло соскользнул в самый низ, еще и потратил " + place.hard() + " выносливости");
-            changeSt((float) place.hard() / -1);
+            Console.describe("Эээ... Ты уныло соскользнул в самый низ, еще и потратил " + place.difficulty() + " выносливости");
+            changeSt((float) place.difficulty() / -1);
             changeLocation(place);
         }
     }
@@ -203,7 +203,7 @@ public abstract class Person implements Moveable {
         if (stamina < 0) {
             stamina = 0;
         }
-        Consol.describe("Теперь у тебя " + stamina + " выносливости");
+        Console.describe("Теперь у тебя " + stamina + " выносливости");
     }
 
     private boolean checkit(float chance) {

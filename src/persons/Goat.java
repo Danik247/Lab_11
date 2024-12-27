@@ -1,12 +1,12 @@
 package persons;
 
-import helpfulClasses.Consol;
+import helpfulClasses.Console;
 
 public class Goat extends Person {
 
     @Override
     void boringStart() {
-        Consol.describe("    "+name + ": А почему мне дали только ловкость?\n    XXXX: Тихо, мы начали");
+        Console.describe("    "+name + ": А почему мне дали только ловкость?\n    XXXX: Тихо, мы начали");
     }
 
     public Goat(float dexterity, float speed, float stamina, float eloquence) {
