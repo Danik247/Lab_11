@@ -1,4 +1,4 @@
-package rec;
+package record;
 
 import exept.InvalidPlaceException;
 

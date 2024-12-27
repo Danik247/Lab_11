@@ -1,5 +1,5 @@
 import persons.*;
-import rec.Place;
+import record.Place;
 import helpfulClasses.Crowd;
 
 public class Main {

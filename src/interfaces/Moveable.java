@@ -1,5 +1,5 @@
 package interfaces;
-import rec.Place;
+import record.Place;
 
 public interface Moveable {
 

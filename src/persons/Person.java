@@ -3,9 +3,9 @@ package persons;
 import enums.Effect;
 import helpfulClasses.Console;
 import interfaces.Moveable;
-import rec.Place;
+import record.Place;
 import helpfulClasses.Crowd;
-import rec.Statistics;
+import record.Statistics;
 
 import java.util.ArrayList;
 
