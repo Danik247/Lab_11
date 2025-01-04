@@ -10,7 +10,7 @@ public class Crowd {
         this.content = content;
         this.count = count;
     }
-    public void play(Person pers){
+    public void play(Person pers) {
         System.out.println("толпа собралась кидать в тебя мячи, приготовься\n...");
         boolean win = true;
         for (var i=0; i <= count;i++){

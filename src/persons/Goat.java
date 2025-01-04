@@ -8,20 +8,13 @@ public class Goat extends Person {
         super("Козел", dexterity, speed, stamina, eloquence, 2, 3);
     }
 
+    public Goat(float dexterity){
+        this(dexterity, (float) (dexterity*1.5), dexterity *4, dexterity *3);
+        boringStart();
+    }
+
     @Override
     void boringStart() {
         Console.describe("    "+name + ": А почему мне дали только ловкость?\n    XXXX: Тихо, мы начали");
     }
-
-
-
-    public Goat(float dexterity){
-        float speed = (float) (dexterity*1.5);
-        float stamina = dexterity *4;
-        float eloquence = dexterity *3;
-        this(dexterity, speed, stamina, eloquence);
-        boringStart();
-    }
-
-
 }

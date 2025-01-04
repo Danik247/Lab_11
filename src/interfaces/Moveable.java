@@ -1,4 +1,5 @@
 package interfaces;
+import exept.PlaceEnterException;
 import record.Place;
 
 public interface Moveable {

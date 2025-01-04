@@ -1,6 +1,7 @@
 package persons;
 
 import enums.Effect;
+import exept.PlaceEnterException;
 import helpfulClasses.Console;
 import interfaces.Moveable;
 import record.Place;
@@ -78,22 +79,27 @@ public abstract class Person implements Moveable {
     @Override
     public void changeLocation(Place place) {
         boolean success = checkit(60 - (place.difficulty() * 12 - (stamina + allStats.dexterity()) * 4));
-        if (place.difficulty() < stamina) {
-            if (place.isUp()) {
-                getUp(place, success);
-            } else if (place.isDown()) {
-                getDown(place, success);
-            } else if (place.isHide()) {
-                getHide(place, success);
+        try{
+            if (place.difficulty() < stamina) {
+                if (place.isUp()) {
+                    getUp(place, success);
+                } else if (place.isDown()) {
+                    getDown(place, success);
+                } else if (place.isHide()) {
+                    getHide(place, success);
+                } else {
+                    getNormal(place);
+                }
+                lastplaces.add(place);
             } else {
-                getNormal(place);
+                Console.describe("Что-то ты устал, попробуй отдохнуть");
+                rest(place.difficulty() * 3);
+                changeLocation(place);
             }
-            lastplaces.add(place);
-        } else {
-            Console.describe("Что-то ты устал, попробуй отдохнуть");
-            rest(place.difficulty() * 3);
-            changeLocation(place);
+        }catch (PlaceEnterException e){
+            System.err.println(e.getMessage());
         }
+
     }
 
     @Override
@@ -158,12 +164,18 @@ public abstract class Person implements Moveable {
         }
     }
 
-    private void getNormal(Place place) {
+    private void getNormal(Place place) throws PlaceEnterException {
+        if (effect != null) {
+            throw new PlaceEnterException("сначала выйди чтобы войти");
+        }
         Console.describe(name + " пришел к такому месту как " + place.name() + " почти не потратив выносливости");
         changeSt((float) place.difficulty() / -10);
     }
 
-    private void getHide(Place place, boolean success) {
+    private void getHide(Place place, boolean success) throws PlaceEnterException{
+        if (effect != null) {
+            throw new PlaceEnterException("сначала выйди чтобы войти");
+        }
         if (success) {
             Console.describe("Ты решил спрятаться \nПоздравляю тебя не видно, теперь ты " + place.name());
             effect = Effect.IS_HIDED;
@@ -173,7 +185,10 @@ public abstract class Person implements Moveable {
         }
     }
 
-    private void getDown(Place place, boolean success) {
+    private void getDown(Place place, boolean success) throws PlaceEnterException {
+        if (effect != null) {
+            throw new PlaceEnterException("сначала выйди чтобы войти");
+        }
         if (success) {
             Console.describe("ты аккуратно спустился в " + place.name() + ", хоть и потратил " + place.difficulty() + " выносливости");
             changeSt((float) place.difficulty() / -1);
@@ -185,7 +200,10 @@ public abstract class Person implements Moveable {
         effect = Effect.IS_DROPPED;
     }
 
-    private void getUp(Place place, boolean success) {
+    private void getUp(Place place, boolean success) throws PlaceEnterException {
+        if (effect != null) {
+            throw new PlaceEnterException("сначала выйди чтобы войти");
+        }
         if (success) {
             Console.describe("Ты залез на " + place.name() + ", но потратил " + place.difficulty() + " выноосливости");
             changeSt((float) place.difficulty() / -2);

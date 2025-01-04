@@ -1,9 +1,9 @@
 package exept;
 
-public class InvalidPlaceException extends IllegalArgumentException {
+public class PlaceEnterException extends Exception {
     private final String customMessage;
 
-    public InvalidPlaceException(String message) {
+    public PlaceEnterException(String message) {
         super(message);
         this.customMessage = message;
     }
@@ -13,4 +13,3 @@ public class InvalidPlaceException extends IllegalArgumentException {
         return "Ошибочка: " + customMessage;
     }
 }
-
