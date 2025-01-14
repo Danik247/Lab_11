@@ -1,6 +1,6 @@
 package exept;
 
-public class PlaceEnterException extends Exception {
+public class PlaceEnterException extends RuntimeException {
     private final String customMessage;
 
     public PlaceEnterException(String message) {

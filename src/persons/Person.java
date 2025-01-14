@@ -79,7 +79,7 @@ public abstract class Person implements Moveable {
     @Override
     public void changeLocation(Place place) {
         boolean success = checkit(60 - (place.difficulty() * 12 - (stamina + allStats.dexterity()) * 4));
-        try{
+
             if (place.difficulty() < stamina) {
                 if (place.isUp()) {
                     getUp(place, success);
@@ -96,9 +96,7 @@ public abstract class Person implements Moveable {
                 rest(place.difficulty() * 3);
                 changeLocation(place);
             }
-        }catch (PlaceEnterException e){
-            System.err.println(e.getMessage());
-        }
+
 
     }
 
@@ -164,7 +162,7 @@ public abstract class Person implements Moveable {
         }
     }
 
-    private void getNormal(Place place) throws PlaceEnterException {
+    private void getNormal(Place place) {
         if (effect != null) {
             throw new PlaceEnterException("сначала выйди чтобы войти");
         }
@@ -172,7 +170,7 @@ public abstract class Person implements Moveable {
         changeSt((float) place.difficulty() / -10);
     }
 
-    private void getHide(Place place, boolean success) throws PlaceEnterException{
+    private void getHide(Place place, boolean success) {
         if (effect != null) {
             throw new PlaceEnterException("сначала выйди чтобы войти");
         }
@@ -185,7 +183,7 @@ public abstract class Person implements Moveable {
         }
     }
 
-    private void getDown(Place place, boolean success) throws PlaceEnterException {
+    private void getDown(Place place, boolean success) {
         if (effect != null) {
             throw new PlaceEnterException("сначала выйди чтобы войти");
         }
@@ -200,7 +198,7 @@ public abstract class Person implements Moveable {
         effect = Effect.IS_DROPPED;
     }
 
-    private void getUp(Place place, boolean success) throws PlaceEnterException {
+    private void getUp(Place place, boolean success) {
         if (effect != null) {
             throw new PlaceEnterException("сначала выйди чтобы войти");
         }
