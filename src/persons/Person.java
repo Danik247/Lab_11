@@ -12,11 +12,12 @@ import java.util.ArrayList;
 
 public abstract class Person implements Moveable {
     protected Statistics allStats;
-    protected String name;//имя
+    final public String name;//имя
     protected float stamina;
     protected Effect effect;//статус
     ArrayList<Place> lastplaces = new ArrayList<>();
     Place start = new Place("Старт", 0, false, false, false);
+
 
     public Person(String name, float dexterity, float speed, float stamina, float eloquence, float size, float weight) {
         this.allStats = new Statistics(speed, dexterity, eloquence, weight, size);
@@ -63,7 +64,7 @@ public abstract class Person implements Moveable {
         boolean success = checkit(60 - (crowd.count - (stamina + allStats.dexterity()) * 3));
         if (stamina >= (float) crowd.count / 3) {
             if (success) {
-                Console.describe("ты прополз через толпу из " + crowd.count + " " + crowd.content.name + "-ов");
+                Console.describe("ты прополз через толпу из " + crowd.count + "челиков");
                 changeSt((float) crowd.count / 3);
             } else {
                 Console.describe("тебя вытолкнули обратно, попробуй снова");
@@ -116,10 +117,8 @@ public abstract class Person implements Moveable {
         }
     }
 
-    public boolean dodge(Person attacker) {
-        boolean success = checkit(50 + (stamina + allStats.dexterity()) * 2);
-        Console.describe(success ? "увернулся" : attacker.name + " попал в тебя");
-        return success;
+    public boolean dodge() {
+        return checkit(50 + (stamina + allStats.dexterity()) * 2);
     }
 
     public void rest(float timeHour) {
