@@ -24,7 +24,7 @@ public class Crowd {
             return success;
         };
         for (var i=0; i <= count;i++){
-            win = attacker.attack(player, names[(int) (random() * names.length)]);
+            win = attacker.attack(player, names[(int) (random() * names.length - 1)]);
             if (!win){
                 break;
             }
